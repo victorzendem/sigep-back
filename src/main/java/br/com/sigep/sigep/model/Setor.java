@@ -1,5 +1,7 @@
 package br.com.sigep.sigep.model;
 
+
+
 public class Setor {
 
     private Long id;
