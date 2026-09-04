@@ -1,7 +1,7 @@
 package br.com.sigep.sigep.domain.model;
 
-import br.com.sigep.sigep.enums.PrioridadeProcesso;
-import br.com.sigep.sigep.enums.StatusProcesso;
+import br.com.sigep.sigep.domain.enums.PrioridadeProcesso;
+import br.com.sigep.sigep.domain.enums.StatusProcesso;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package br.com.sigep.sigep.enums;
+package br.com.sigep.sigep.domain.enums;
 
 public enum StatusProcesso {
     ABERTO,
