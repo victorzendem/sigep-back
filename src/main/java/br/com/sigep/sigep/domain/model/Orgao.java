@@ -1,4 +1,4 @@
-package br.com.sigep.sigep.model;
+package br.com.sigep.sigep.domain.model;
 
 
 import jakarta.persistence.*;
@@ -26,7 +26,6 @@ public class Orgao {
 
     @Column(name = "ativo", nullable = false)
     private boolean ativo = true;
-
 
     public Orgao(String nome, String sigla, String cnpj){
         this.nome = nome;
