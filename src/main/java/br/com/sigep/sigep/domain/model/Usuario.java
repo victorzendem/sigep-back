@@ -33,8 +33,7 @@ public class Usuario {
     private String cpf;
 
     @Column(name = "ativo", nullable = false)
-    private boolean ativo;
-
+    private boolean ativo = true;
 
     @CreationTimestamp
     @Column(name = "data_criacao", nullable = false)
@@ -44,11 +43,10 @@ public class Usuario {
     @Column(name = "data_atualizacao", nullable = false)
     LocalDate dataAtualizacao;
 
-    public Usuario(String nome, String email, String senha, String cpf, boolean ativo) {
+    public Usuario(String nome, String email, String senha, String cpf) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.cpf = cpf;
-        this.ativo = ativo;
     }
 }

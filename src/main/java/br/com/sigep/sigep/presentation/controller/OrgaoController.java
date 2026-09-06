@@ -1,8 +1,10 @@
 package br.com.sigep.sigep.presentation.controller;
 
 
+import br.com.sigep.sigep.application.dto.orgao.OrgaoRequest;
+import br.com.sigep.sigep.application.dto.orgao.OrgaoResponse;
 import br.com.sigep.sigep.application.service.OrgaoService;
-import br.com.sigep.sigep.domain.model.Orgao;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +22,9 @@ public class OrgaoController {
 
 
     @PostMapping
-    public ResponseEntity<Orgao> cadastrar(@RequestBody Orgao orgao){
+    public ResponseEntity<OrgaoResponse> cadastrar(@Valid @RequestBody OrgaoRequest orgaoRequest){
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(ORGAO_SERVICE.cadastrar(orgao));
+                .body(ORGAO_SERVICE.cadastrar(orgaoRequest));
     }
 }
