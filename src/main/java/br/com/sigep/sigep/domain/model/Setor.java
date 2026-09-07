@@ -34,7 +34,4 @@ public class Setor {
         this.sigla = sigla;
         this.orgao = orgao;
     }
-
-
-
 }
