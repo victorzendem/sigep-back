@@ -25,6 +25,12 @@ public class SetorService {
 
         return SetorResponse.from(setor);
     }
+
+    public SetorResponse buscarPorId(Long id){
+        Setor setor = SETOR_REPOSITORY.findById(id).orElseThrow(SecurityException::new);
+
+        return SetorResponse.from(setor);
+    }
 }
 
 
