@@ -7,6 +7,8 @@ import br.com.sigep.sigep.infraestructure.persistency.repository.SetorRepository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class SetorService {
@@ -30,6 +32,10 @@ public class SetorService {
         Setor setor = SETOR_REPOSITORY.findById(id).orElseThrow(SecurityException::new);
 
         return SetorResponse.from(setor);
+    }
+
+    public List<SetorResponse> listarTodos(){
+        return SETOR_REPOSITORY.findAll().stream().map(SetorResponse::from).toList();
     }
 }
 
