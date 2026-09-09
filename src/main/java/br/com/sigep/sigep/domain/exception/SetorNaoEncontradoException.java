@@ -4,4 +4,8 @@ public class SetorNaoEncontradoException extends RuntimeException {
     public SetorNaoEncontradoException(String message) {
         super(message);
     }
+
+    public SetorNaoEncontradoException(){
+        super("Setor não encontrado.");
+    }
 }

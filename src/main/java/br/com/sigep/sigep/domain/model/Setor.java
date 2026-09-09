@@ -34,4 +34,11 @@ public class Setor {
         this.sigla = sigla;
         this.orgao = orgao;
     }
+
+
+    public void atualizar(String nome, String sigla, Orgao orgao){
+        this.nome = nome;
+        this.sigla = sigla;
+        this.orgao = orgao;
+    }
 }
