@@ -3,6 +3,7 @@ package br.com.sigep.sigep.presentation.controller;
 
 import br.com.sigep.sigep.application.dto.orgao.OrgaoRequest;
 import br.com.sigep.sigep.application.dto.orgao.OrgaoResponse;
+import br.com.sigep.sigep.application.dto.orgao.OrgaoUpdateRequest;
 import br.com.sigep.sigep.application.service.OrgaoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,11 @@ public class OrgaoController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ORGAO_SERVICE.cadastrar(orgaoRequest));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrgaoResponse> atualizar(@PathVariable Long id, @Valid @RequestBody OrgaoUpdateRequest request){
+        return ResponseEntity.ok(ORGAO_SERVICE.atualizar(id, request));
     }
 
     @GetMapping

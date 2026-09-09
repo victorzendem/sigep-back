@@ -2,11 +2,13 @@ package br.com.sigep.sigep.application.service;
 
 import br.com.sigep.sigep.application.dto.orgao.OrgaoRequest;
 import br.com.sigep.sigep.application.dto.orgao.OrgaoResponse;
+import br.com.sigep.sigep.application.dto.orgao.OrgaoUpdateRequest;
 import br.com.sigep.sigep.domain.exception.OrgaoNaoEncontradoException;
 import br.com.sigep.sigep.domain.model.Orgao;
 import br.com.sigep.sigep.infraestructure.persistency.repository.OrgaoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +27,19 @@ public class OrgaoService {
                 orgaoRequest.cpnj()
         );
         ORGAO_REPOSITORY.save(orgao);
+
+        return OrgaoResponse.from(orgao);
+    }
+
+    @Transactional
+    public OrgaoResponse atualizar(Long id, OrgaoUpdateRequest request){
+
+        Orgao orgao = ORGAO_REPOSITORY.findById(id).orElseThrow(OrgaoNaoEncontradoException::new);
+
+        orgao.atualizar(
+                request.nome(),
+                request.sigla(),
+                request.sigla());
 
         return OrgaoResponse.from(orgao);
     }

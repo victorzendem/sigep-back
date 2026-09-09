@@ -32,4 +32,10 @@ public class Orgao {
         this.sigla = sigla;
         this.cnpj = cnpj;
     }
+
+    public void atualizar(String nome, String sigla, String cnpj){
+        this.nome = nome;
+        this.sigla = sigla;
+        this.cnpj = cnpj;
+    }
 }
