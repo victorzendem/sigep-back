@@ -49,4 +49,11 @@ public class Usuario {
         this.senha = senha;
         this.cpf = cpf;
     }
+
+    public void atualizar(String nome, String email, String cpf, String senha){
+        this.nome = nome;
+        this.email = email;
+        this.cpf = cpf;
+        this.senha = senha;
+    }
 }

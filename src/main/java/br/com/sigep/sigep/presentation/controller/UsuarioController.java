@@ -3,15 +3,13 @@ package br.com.sigep.sigep.presentation.controller;
 
 import br.com.sigep.sigep.application.dto.usuario.UsuarioRequest;
 import br.com.sigep.sigep.application.dto.usuario.UsuarioResponse;
+import br.com.sigep.sigep.application.dto.usuario.UsuarioUpdateRequest;
 import br.com.sigep.sigep.application.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/usuario")
@@ -26,6 +24,11 @@ public class UsuarioController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(USUARIO_SERVICE.cadastrar(usuarioRequest));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioResponse> atualizar(@PathVariable Long id, @Valid @RequestBody UsuarioUpdateRequest request){
+        return ResponseEntity.ok(USUARIO_SERVICE.atualizar(id,request));
     }
 
 }
