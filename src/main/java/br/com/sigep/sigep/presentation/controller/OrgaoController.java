@@ -42,4 +42,10 @@ public class OrgaoController {
     public ResponseEntity<OrgaoResponse> buscarPorId(@PathVariable Long id){
         return ResponseEntity.ok(ORGAO_SERVICE.buscarPorId(id));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        ORGAO_SERVICE.desativar(id);
+        return ResponseEntity.noContent().build();
+    }
 }

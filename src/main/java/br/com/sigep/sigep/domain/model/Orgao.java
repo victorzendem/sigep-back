@@ -38,4 +38,12 @@ public class Orgao {
         this.sigla = sigla;
         this.cnpj = cnpj;
     }
+
+    public void desativar(){
+        this.ativo = false;
+    }
+
+    public void ativar(){
+        this.ativo = true;
+    }
 }

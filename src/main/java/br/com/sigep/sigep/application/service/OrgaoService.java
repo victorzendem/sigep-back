@@ -19,7 +19,7 @@ public class OrgaoService {
     private final OrgaoRepository ORGAO_REPOSITORY;
 
 
-    public OrgaoResponse cadastrar(OrgaoRequest orgaoRequest){
+    public OrgaoResponse cadastrar(OrgaoRequest orgaoRequest) {
 
         Orgao orgao = new Orgao(
                 orgaoRequest.nome(),
@@ -32,7 +32,7 @@ public class OrgaoService {
     }
 
     @Transactional
-    public OrgaoResponse atualizar(Long id, OrgaoUpdateRequest request){
+    public OrgaoResponse atualizar(Long id, OrgaoUpdateRequest request) {
 
         Orgao orgao = ORGAO_REPOSITORY.findById(id).orElseThrow(OrgaoNaoEncontradoException::new);
 
@@ -44,19 +44,35 @@ public class OrgaoService {
         return OrgaoResponse.from(orgao);
     }
 
-    public List<OrgaoResponse> listarTodos(){
+    public List<OrgaoResponse> listarTodos() {
         return ORGAO_REPOSITORY
-                .findAll()
+                .findByAtivoTrue()
                 .stream()
                 .map(OrgaoResponse::from)
                 .toList();
     }
 
-    public OrgaoResponse buscarPorId(Long id){
+    public OrgaoResponse buscarPorId(Long id) {
 
         Orgao orgao = ORGAO_REPOSITORY
                 .findById(id).orElseThrow(OrgaoNaoEncontradoException::new);
 
+        return OrgaoResponse.from(orgao);
+    }
+
+    private Orgao findById(Long id) {
+        return ORGAO_REPOSITORY.findById(id).orElseThrow(OrgaoNaoEncontradoException::new);
+    }
+
+    public OrgaoResponse desativar(Long id) {
+        Orgao orgao = findById(id);
+        orgao.desativar();
+        return OrgaoResponse.from(orgao);
+    }
+
+    public OrgaoResponse ativar(Long id){
+        Orgao orgao = findById(id);
+        orgao.ativar();
         return OrgaoResponse.from(orgao);
     }
 
