@@ -1,5 +1,6 @@
 package br.com.sigep.sigep.application.service;
 
+import br.com.sigep.sigep.application.dto.orgao.OrgaoPatchRequest;
 import br.com.sigep.sigep.application.dto.orgao.OrgaoRequest;
 import br.com.sigep.sigep.application.dto.orgao.OrgaoResponse;
 import br.com.sigep.sigep.application.dto.orgao.OrgaoUpdateRequest;
@@ -7,6 +8,8 @@ import br.com.sigep.sigep.domain.exception.OrgaoNaoEncontradoException;
 import br.com.sigep.sigep.domain.model.Orgao;
 import br.com.sigep.sigep.infraestructure.persistency.repository.OrgaoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,12 +47,23 @@ public class OrgaoService {
         return OrgaoResponse.from(orgao);
     }
 
-    public List<OrgaoResponse> listarTodos() {
+    @Transactional
+    public OrgaoResponse atualizarParciamente(Long id, OrgaoPatchRequest request){
+        Orgao orgao = findById(id);
+
+        orgao.atualizarParcialmente(
+                request.nome(),
+                request.sigla(),
+                request.cnpj()
+        );
+
+        return OrgaoResponse.from(orgao);
+    }
+
+    public Page<OrgaoResponse> listarTodos(Pageable pageable) {
         return ORGAO_REPOSITORY
-                .findByAtivoTrue()
-                .stream()
-                .map(OrgaoResponse::from)
-                .toList();
+                .findByAtivoTrue(pageable)
+                .map(OrgaoResponse::from);
     }
 
     public OrgaoResponse buscarPorId(Long id) {
@@ -64,10 +78,9 @@ public class OrgaoService {
         return ORGAO_REPOSITORY.findById(id).orElseThrow(OrgaoNaoEncontradoException::new);
     }
 
-    public OrgaoResponse desativar(Long id) {
+    public void desativar(Long id) {
         Orgao orgao = findById(id);
         orgao.desativar();
-        return OrgaoResponse.from(orgao);
     }
 
     public OrgaoResponse ativar(Long id){

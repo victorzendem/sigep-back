@@ -39,6 +39,18 @@ public class Orgao {
         this.cnpj = cnpj;
     }
 
+    public void atualizarParcialmente(String nome, String sigla, String cnpj){
+        if(nome != null){
+            this.nome = nome;
+        }
+        if(sigla != null){
+            this.sigla = sigla;
+        }
+        if(cnpj != null){
+            this.cnpj = cnpj;
+        }
+    }
+
     public void desativar(){
         this.ativo = false;
     }

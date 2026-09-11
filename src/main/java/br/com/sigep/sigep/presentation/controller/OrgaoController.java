@@ -1,17 +1,18 @@
 package br.com.sigep.sigep.presentation.controller;
 
 
+import br.com.sigep.sigep.application.dto.orgao.OrgaoPatchRequest;
 import br.com.sigep.sigep.application.dto.orgao.OrgaoRequest;
 import br.com.sigep.sigep.application.dto.orgao.OrgaoResponse;
 import br.com.sigep.sigep.application.dto.orgao.OrgaoUpdateRequest;
 import br.com.sigep.sigep.application.service.OrgaoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/orgao")
@@ -33,9 +34,14 @@ public class OrgaoController {
         return ResponseEntity.ok(ORGAO_SERVICE.atualizar(id, request));
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<OrgaoResponse> atualizarParcialmente(@PathVariable Long id, @Valid @RequestBody OrgaoPatchRequest request){
+        return ResponseEntity.ok(ORGAO_SERVICE.atualizarParciamente(id, request));
+    }
+
     @GetMapping
-    public ResponseEntity<List<OrgaoResponse>> listarTodos(){
-        return ResponseEntity.ok(ORGAO_SERVICE.listarTodos());
+    public ResponseEntity<Page<OrgaoResponse>> listarTodos(Pageable pageable){
+        return ResponseEntity.ok(ORGAO_SERVICE.listarTodos(pageable));
     }
 
     @GetMapping("/{id}")

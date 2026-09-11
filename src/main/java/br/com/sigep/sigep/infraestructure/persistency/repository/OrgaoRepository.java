@@ -1,6 +1,8 @@
 package br.com.sigep.sigep.infraestructure.persistency.repository;
 
 import br.com.sigep.sigep.domain.model.Orgao;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +12,5 @@ import java.util.List;
 @Repository
 public interface OrgaoRepository extends JpaRepository<Orgao, Long> {
 
-    List<Orgao> findByAtivoTrue();
+    Page<Orgao> findByAtivoTrue(Pageable pageable);
 }
