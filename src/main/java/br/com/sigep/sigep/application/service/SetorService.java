@@ -71,6 +71,8 @@ public class SetorService {
         return SETOR_REPOSITORY.findById(id).orElseThrow(SetorNaoEncontradoException::new);
     }
 
+
+    @Transactional(readOnly = true)
     public List<SetorResponse> listarTodos(){
         return SETOR_REPOSITORY.findAll().stream().map(SetorResponse::from).toList();
     }

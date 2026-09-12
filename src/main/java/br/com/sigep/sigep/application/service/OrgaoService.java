@@ -82,11 +82,13 @@ public class OrgaoService {
         return ORGAO_REPOSITORY.findById(id).orElseThrow(OrgaoNaoEncontradoException::new);
     }
 
+    @Transactional
     public void desativar(Long id) {
         Orgao orgao = findById(id);
         orgao.desativar();
     }
 
+    @Transactional
     public OrgaoResponse ativar(Long id){
         Orgao orgao = findById(id);
         orgao.ativar();
