@@ -60,12 +60,16 @@ public class OrgaoService {
         return OrgaoResponse.from(orgao);
     }
 
+
+    @Transactional(readOnly = true)
     public Page<OrgaoResponse> listarTodos(Pageable pageable) {
         return ORGAO_REPOSITORY
                 .findByAtivoTrue(pageable)
                 .map(OrgaoResponse::from);
     }
 
+
+    @Transactional(readOnly = true)
     public OrgaoResponse buscarPorId(Long id) {
 
         Orgao orgao = ORGAO_REPOSITORY

@@ -1,5 +1,6 @@
 package br.com.sigep.sigep.presentation.controller;
 
+import br.com.sigep.sigep.application.dto.setor.SetorPatchRequest;
 import br.com.sigep.sigep.application.dto.setor.SetorRequest;
 import br.com.sigep.sigep.application.dto.setor.SetorResponse;
 import br.com.sigep.sigep.application.dto.setor.SetorUpdateRequest;
@@ -28,5 +29,10 @@ public class SetorController {
     @PutMapping("/{id}")
     public ResponseEntity<SetorResponse> atualizar(@PathVariable Long id, @Valid @RequestBody SetorUpdateRequest request){
         return ResponseEntity.ok(SETOR_SERVICE.atualizar(id, request));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<SetorResponse> atualizarParcialmente(@PathVariable Long id, @Valid @RequestBody SetorPatchRequest request){
+        return ResponseEntity.ok(SETOR_SERVICE.atualizarParcialmente(id, request));
     }
 }

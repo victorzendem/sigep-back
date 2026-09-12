@@ -1,5 +1,6 @@
 package br.com.sigep.sigep.application.service;
 
+import br.com.sigep.sigep.application.dto.setor.SetorPatchRequest;
 import br.com.sigep.sigep.application.dto.setor.SetorRequest;
 import br.com.sigep.sigep.application.dto.setor.SetorResponse;
 import br.com.sigep.sigep.application.dto.setor.SetorUpdateRequest;
@@ -44,10 +45,30 @@ public class SetorService {
         return SetorResponse.from(setor);
     }
 
+    @Transactional
+    public SetorResponse atualizarParcialmente(Long id, SetorPatchRequest request){
+
+        Setor setor = findById(id);
+        setor.atualizarParcialmente(
+                request.nome(),
+                request.sigla(),
+                request.orgao()
+        );
+        return SetorResponse.from(setor);
+    }
+
+
+
+
+    @Transactional(readOnly = true)
     public SetorResponse buscarPorId(Long id){
         Setor setor = SETOR_REPOSITORY.findById(id).orElseThrow(SecurityException::new);
 
         return SetorResponse.from(setor);
+    }
+
+    private Setor findById(Long id){
+        return SETOR_REPOSITORY.findById(id).orElseThrow(SetorNaoEncontradoException::new);
     }
 
     public List<SetorResponse> listarTodos(){

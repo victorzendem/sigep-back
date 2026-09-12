@@ -41,4 +41,16 @@ public class Setor {
         this.sigla = sigla;
         this.orgao = orgao;
     }
+
+    public void atualizarParcialmente(String nome, String sigla, Orgao orgao){
+        if(nome != null){
+            this.nome = nome;
+        }
+        if(sigla != null){
+            this.sigla = sigla;
+        }
+        if(orgao != null){
+            this.orgao = orgao;
+        }
+    }
 }
