@@ -1,6 +1,7 @@
 package br.com.sigep.sigep.presentation.controller;
 
 
+import br.com.sigep.sigep.application.dto.usuario.UsuarioPatchRequest;
 import br.com.sigep.sigep.application.dto.usuario.UsuarioRequest;
 import br.com.sigep.sigep.application.dto.usuario.UsuarioResponse;
 import br.com.sigep.sigep.application.dto.usuario.UsuarioUpdateRequest;
@@ -29,6 +30,11 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponse> atualizar(@PathVariable Long id, @Valid @RequestBody UsuarioUpdateRequest request){
         return ResponseEntity.ok(USUARIO_SERVICE.atualizar(id,request));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UsuarioResponse> atualizarParcialmente(@PathVariable Long id, @Valid @RequestBody UsuarioPatchRequest request){
+        return ResponseEntity.ok(USUARIO_SERVICE.atualizarParcialmente(id, request));
     }
 
 }

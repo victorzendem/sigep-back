@@ -56,4 +56,19 @@ public class Usuario {
         this.cpf = cpf;
         this.senha = senha;
     }
+
+    public void atualizarParcialmente(String nome, String email, String cpf, String senha){
+        if(nome != null){
+            this.nome = nome;
+        }
+        if(email != null){
+            this.email = email;
+        }
+        if(cpf != null){
+            this.cpf = cpf;
+        }
+        if(senha != null){
+            this.senha = senha;
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package br.com.sigep.sigep.application.service;
 
 
+import br.com.sigep.sigep.application.dto.usuario.UsuarioPatchRequest;
 import br.com.sigep.sigep.application.dto.usuario.UsuarioRequest;
 import br.com.sigep.sigep.application.dto.usuario.UsuarioResponse;
 import br.com.sigep.sigep.application.dto.usuario.UsuarioUpdateRequest;
@@ -42,5 +43,30 @@ public class UsuarioService {
         );
 
         return UsuarioResponse.from(usuario);
+    }
+
+    @Transactional
+    public UsuarioResponse atualizarParcialmente(Long id, UsuarioPatchRequest request){
+        Usuario usuario = findById(id);
+
+        usuario.atualizarParcialmente(
+                request.nome(),
+                request.email(),
+                request.cpf(),
+                request.senha()
+        );
+        return UsuarioResponse.from(usuario);
+    }
+
+
+    @Transactional(readOnly = true)
+    public UsuarioResponse buscarPorId(Long id){
+        Usuario usuario = findById(id);
+
+        return UsuarioResponse.from(usuario);
+    }
+
+    private Usuario findById(Long id){
+        return USUARIO_REPOSITORY.findById(id).orElseThrow(UsuarioNaoEncontradoException::new);
     }
 }
