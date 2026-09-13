@@ -11,4 +11,10 @@ import org.springframework.stereotype.Repository;
 public interface OrgaoRepository extends JpaRepository<Orgao, Long> {
 
     Page<Orgao> findByAtivoTrue(Pageable pageable);
+
+    boolean existsByCnpj(String cnpj);
+    boolean existsBySigla(String sigla);
+
+     boolean existsByCnpjAndIdNot(String cnpj, Long id);
+     boolean existBySiglAndIdNot(String sigla, Long id);
 }

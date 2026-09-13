@@ -4,6 +4,7 @@ import br.com.sigep.sigep.application.dto.orgao.OrgaoPatchRequest;
 import br.com.sigep.sigep.application.dto.orgao.OrgaoRequest;
 import br.com.sigep.sigep.application.dto.orgao.OrgaoResponse;
 import br.com.sigep.sigep.application.dto.orgao.OrgaoUpdateRequest;
+import br.com.sigep.sigep.domain.exception.OrgaoJaExisteException;
 import br.com.sigep.sigep.domain.exception.OrgaoNaoEncontradoException;
 import br.com.sigep.sigep.domain.model.Orgao;
 import br.com.sigep.sigep.infraestructure.persistency.repository.OrgaoRepository;
@@ -23,6 +24,14 @@ public class OrgaoService {
 
 
     public OrgaoResponse cadastrar(OrgaoRequest orgaoRequest) {
+
+        if(ORGAO_REPOSITORY.existsByCnpj(orgaoRequest.nome())){
+            throw new OrgaoJaExisteException("Já existe um orgão com esse CNPJ.");
+        }
+
+        if(ORGAO_REPOSITORY.existsBySigla(orgaoRequest.sigla())){
+            throw new OrgaoJaExisteException("Já existe um orgão com essa sigla.");
+        }
 
         Orgao orgao = new Orgao(
                 orgaoRequest.nome(),

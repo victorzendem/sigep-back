@@ -1,6 +1,7 @@
 package br.com.sigep.sigep.presentation.exception;
 
 import br.com.sigep.sigep.domain.exception.OrgaoNaoEncontradoException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,5 +24,16 @@ public class ApiExceptionHandle {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(response);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataIntegrityViolation(DataIntegrityViolationException ex){
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                "Operacão não permitida: violacão de restricão de integridade no banco de dados. ",
+                LocalDateTime.now(),
+                List.of()
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 }
