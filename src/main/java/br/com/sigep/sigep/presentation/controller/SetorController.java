@@ -7,6 +7,8 @@ import br.com.sigep.sigep.application.dto.setor.SetorUpdateRequest;
 import br.com.sigep.sigep.application.service.SetorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,11 @@ public class SetorController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(SETOR_SERVICE.cadastrar(setorRequest));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<SetorResponse>> listarTodos(Pageable pageable){
+        return ResponseEntity.ok(SETOR_SERVICE.listarTodos(pageable));
     }
 
     @PutMapping("/{id}")

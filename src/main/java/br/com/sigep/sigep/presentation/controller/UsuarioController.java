@@ -8,6 +8,8 @@ import br.com.sigep.sigep.application.dto.usuario.UsuarioUpdateRequest;
 import br.com.sigep.sigep.application.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,11 @@ public class UsuarioController {
     @PatchMapping("/{id}")
     public ResponseEntity<UsuarioResponse> atualizarParcialmente(@PathVariable Long id, @Valid @RequestBody UsuarioPatchRequest request){
         return ResponseEntity.ok(USUARIO_SERVICE.atualizarParcialmente(id, request));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<UsuarioResponse>> listaTodos(Pageable pageable){
+        return ResponseEntity.ok(USUARIO_SERVICE.listarTodos(pageable));
     }
 
 }

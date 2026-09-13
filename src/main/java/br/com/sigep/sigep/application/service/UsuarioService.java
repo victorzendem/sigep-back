@@ -9,6 +9,8 @@ import br.com.sigep.sigep.domain.exception.UsuarioNaoEncontradoException;
 import br.com.sigep.sigep.domain.model.Usuario;
 import br.com.sigep.sigep.infraestructure.persistency.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,7 +68,14 @@ public class UsuarioService {
         return UsuarioResponse.from(usuario);
     }
 
+    @Transactional(readOnly = true)
+    public Page<UsuarioResponse> listarTodos(Pageable pageable){
+        return USUARIO_REPOSITORY.findByAtivoTrue(pageable).map(UsuarioResponse::from);
+    }
+
     private Usuario findById(Long id){
         return USUARIO_REPOSITORY.findById(id).orElseThrow(UsuarioNaoEncontradoException::new);
     }
+
+
 }

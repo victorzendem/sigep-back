@@ -8,6 +8,8 @@ import br.com.sigep.sigep.domain.exception.SetorNaoEncontradoException;
 import br.com.sigep.sigep.domain.model.Setor;
 import br.com.sigep.sigep.infraestructure.persistency.repository.SetorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,8 +75,9 @@ public class SetorService {
 
 
     @Transactional(readOnly = true)
-    public List<SetorResponse> listarTodos(){
-        return SETOR_REPOSITORY.findAll().stream().map(SetorResponse::from).toList();
+    public Page<SetorResponse> listarTodos(Pageable pageable){
+        return SETOR_REPOSITORY.findByAtivoTrue(pageable)
+                .map(SetorResponse::from);
     }
 }
 
