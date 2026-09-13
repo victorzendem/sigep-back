@@ -27,15 +27,15 @@ public class SetorService {
     private final OrgaoRepository ORGAO_REPOSITORY;
 
 
-    public SetorResponse cadastrar(SetorRequest setorRequest){
+    public SetorResponse cadastrar(SetorRequest setorRequest) {
 
         Orgao orgao = ORGAO_REPOSITORY
                 .findById(setorRequest.orgaoId()).orElseThrow(OrgaoNaoEncontradoException::new);
 
-        if(SETOR_REPOSITORY.existsBySiglaAndOrgaoId(setorRequest.sigla(), setorRequest.orgaoId())){
+        if (SETOR_REPOSITORY.existsBySiglaAndOrgaoId(setorRequest.sigla(), setorRequest.orgaoId())) {
             throw new SetorJaExisteException("Já existe um setor cadastrado com a sigla informada.");
         }
-        if(SETOR_REPOSITORY.existsByNomeAndOrgaoId(setorRequest.nome(), setorRequest.orgaoId())){
+        if (SETOR_REPOSITORY.existsByNomeAndOrgaoId(setorRequest.nome(), setorRequest.orgaoId())) {
             throw new SetorJaExisteException("Já existe um setor cadastrado com o nome informado.");
         }
 
@@ -50,16 +50,16 @@ public class SetorService {
     }
 
     @Transactional
-    public SetorResponse atualizar(Long id, SetorUpdateRequest request){
+    public SetorResponse atualizar(Long id, SetorUpdateRequest request) {
 
         Setor setor = findById(id);
         Long orgaoId = setor.getOrgao().getId();
 
-        if(SETOR_REPOSITORY.existsBySiglaAndOrgaoIdAndNotId(request.sigla(), orgaoId, id)){
+        if (SETOR_REPOSITORY.existsBySiglaAndOrgaoIdAndIdNot(request.sigla(), orgaoId, id)) {
             throw new SetorJaExisteException("Já existe um setor cadastrado neste orgão com a sigla informada.");
         }
 
-        if(SETOR_REPOSITORY.existsByNomeAndOrgaoIdAndNotId(request.nome(), orgaoId, id)){
+        if (SETOR_REPOSITORY.existsByNomeAndOrgaoIdAndIdNot(request.nome(), orgaoId, id)) {
             throw new SetorJaExisteException("Já existe um setor cadastrado neste orgão com o nome informado.");
         }
 
@@ -72,18 +72,23 @@ public class SetorService {
     }
 
     @Transactional
-    public SetorResponse atualizarParcialmente(Long id, SetorPatchRequest request){
+    public SetorResponse atualizarParcialmente(Long id, SetorPatchRequest request) {
 
 
         Setor setor = findById(id);
 
         Long orgaoId = setor.getOrgao().getId();
 
-        if(SETOR_REPOSITORY.existsBySiglaAndOrgaoIdAndNotId(request.sigla(), orgaoId, id)){
-            throw new SetorJaExisteException("Já existe um setor cadastrado neste orgão com a sigla informada.");
+        if (request.sigla() != null && !request.sigla().isBlank()) {
+            if (SETOR_REPOSITORY.existsBySiglaAndOrgaoIdAndIdNot(request.sigla(), orgaoId, id)) {
+                throw new SetorJaExisteException("Já existe um setor cadastrado neste orgão com a sigla informada.");
+            }
         }
-        if(SETOR_REPOSITORY.existsByNomeAndOrgaoIdAndNotId(request.nome(), orgaoId, id)){
-            throw new SetorJaExisteException("Já existe um setor cadastrado neste orgão com o nome informado.");
+
+        if (request.nome() != null && !request.nome().isBlank()) {
+            if (SETOR_REPOSITORY.existsByNomeAndOrgaoIdAndIdNot(request.nome(), orgaoId, id)) {
+                throw new SetorJaExisteException("Já existe um setor cadastrado neste orgão com o nome informado.");
+            }
         }
 
         setor.atualizarParcialmente(
@@ -95,22 +100,20 @@ public class SetorService {
     }
 
 
-
-
     @Transactional(readOnly = true)
-    public SetorResponse buscarPorId(Long id){
+    public SetorResponse buscarPorId(Long id) {
         Setor setor = SETOR_REPOSITORY.findById(id).orElseThrow(SecurityException::new);
 
         return SetorResponse.from(setor);
     }
 
-    private Setor findById(Long id){
+    private Setor findById(Long id) {
         return SETOR_REPOSITORY.findById(id).orElseThrow(SetorNaoEncontradoException::new);
     }
 
 
     @Transactional(readOnly = true)
-    public Page<SetorResponse> listarTodos(Pageable pageable){
+    public Page<SetorResponse> listarTodos(Pageable pageable) {
         return SETOR_REPOSITORY.findByAtivoTrue(pageable)
                 .map(SetorResponse::from);
     }

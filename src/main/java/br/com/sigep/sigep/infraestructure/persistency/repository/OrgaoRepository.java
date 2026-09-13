@@ -14,7 +14,4 @@ public interface OrgaoRepository extends JpaRepository<Orgao, Long> {
 
     boolean existsByCnpj(String cnpj);
     boolean existsBySigla(String sigla);
-
-     boolean existsByCnpjAndIdNot(String cnpj, Long id);
-     boolean existBySiglAndIdNot(String sigla, Long id);
 }
