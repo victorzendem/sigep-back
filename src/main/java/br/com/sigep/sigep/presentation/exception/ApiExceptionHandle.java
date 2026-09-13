@@ -1,6 +1,7 @@
 package br.com.sigep.sigep.presentation.exception;
 
 import br.com.sigep.sigep.domain.exception.OrgaoNaoEncontradoException;
+import br.com.sigep.sigep.domain.exception.SetorJaExisteException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,18 @@ import java.util.List;
 
 @RestControllerAdvice
 public class ApiExceptionHandle {
+
+    @ExceptionHandler(SetorJaExisteException.class)
+    public ResponseEntity<ErrorResponse> handleSetorJaExiste(SetorJaExisteException ex){
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                LocalDateTime.now(),
+                List.of()
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
 
     @ExceptionHandler(OrgaoNaoEncontradoException.class)
     public ResponseEntity<ErrorResponse> handleOrgaoNaoEncontrado(OrgaoNaoEncontradoException exception) {

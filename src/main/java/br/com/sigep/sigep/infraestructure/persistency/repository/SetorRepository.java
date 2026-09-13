@@ -10,4 +10,10 @@ import org.springframework.stereotype.Repository;
 public interface SetorRepository extends JpaRepository<Setor, Long> {
 
     Page<Setor> findByAtivoTrue(Pageable pageable);
+
+    boolean existsBySiglaAndOrgaoId(String sigla, Long orgaoId);
+    boolean existsByNomeAndOrgaoId(String nome, Long orgaoId);
+
+    boolean existsBySiglaAndOrgaoIdAndNotId(String sigla, Long orgaoId, Long id);
+    boolean existsByNomeAndOrgaoIdAndNotId(String nome, Long orgaoId, Long id);
 }

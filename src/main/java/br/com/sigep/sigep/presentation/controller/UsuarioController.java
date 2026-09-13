@@ -40,7 +40,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<UsuarioResponse>> listaTodos(Pageable pageable){
+    public ResponseEntity<Page<UsuarioResponse>> listarTodos(Pageable pageable){
         return ResponseEntity.ok(USUARIO_SERVICE.listarTodos(pageable));
     }
 

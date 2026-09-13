@@ -13,10 +13,8 @@ public record SetorUpdateRequest(
 
         @NotBlank(message = "A sigla é obrigatória")
         @Size(max = 15, message = "A sigla deve conter no máximo 15 caracteres")
-        String sigla,
+        String sigla
 
-        @NotBlank(message = "O orgão é obrigatório.")
-        Orgao orgao
 
 ) {
 }

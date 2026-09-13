@@ -9,7 +9,7 @@ public record SetorPatchRequest(
         String nome,
 
         @Size(max = 15, message = "A sigla deve ter no máximo 15 caracteres.")
-        String sigla,
-        Orgao orgao
+        String sigla
+
 ) {
 }

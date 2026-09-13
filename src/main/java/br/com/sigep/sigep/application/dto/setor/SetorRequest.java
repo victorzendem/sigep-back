@@ -9,6 +9,6 @@ public record SetorRequest(
         @NotBlank(message = "A sigla é obrigatória.")
         String sigla,
         @NotBlank(message = "O orgão é obrigatório.")
-        Orgao orgao
+        Long orgaoId
 ) {
 }
