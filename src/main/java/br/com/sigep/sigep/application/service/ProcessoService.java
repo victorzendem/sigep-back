@@ -3,6 +3,7 @@ package br.com.sigep.sigep.application.service;
 
 import br.com.sigep.sigep.application.dto.processo.ProcessoRequest;
 import br.com.sigep.sigep.application.dto.processo.ProcessoResponse;
+import br.com.sigep.sigep.domain.exception.ProcessoNaoEncontradoException;
 import br.com.sigep.sigep.domain.exception.SetorNaoEncontradoException;
 import br.com.sigep.sigep.domain.exception.UsuarioNaoEncontradoException;
 import br.com.sigep.sigep.domain.model.Processo;
@@ -12,7 +13,10 @@ import br.com.sigep.sigep.infraestructure.persistency.repository.ProcessoReposit
 import br.com.sigep.sigep.infraestructure.persistency.repository.SetorRepository;
 import br.com.sigep.sigep.infraestructure.persistency.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Year;
 
@@ -44,9 +48,26 @@ public class ProcessoService {
         );
 
         PROCESSO_REPOSITORY.save(processo);
-
         return ProcessoResponse.from(processo);
 
+    }
+
+    @Transactional(readOnly = true)
+    public ProcessoResponse buscarPorId(Long id){
+        Processo processo = PROCESSO_REPOSITORY.findById(id).orElseThrow(ProcessoNaoEncontradoException::new);
+
+        return ProcessoResponse.from(processo);
+    }
+
+    @Transactional(readOnly = true)
+     public Page<ProcessoResponse> listarTodos(Pageable pageable){
+        return PROCESSO_REPOSITORY.findAll(pageable).map(ProcessoResponse::from);
+    }
+
+    @Transactional(readOnly = true)
+    public ProcessoResponse buscarPorNumeroProtocolo(String numeroP){
+        Processo processo = PROCESSO_REPOSITORY.findByNumeroProtocolo(numeroP).orElseThrow(ProcessoNaoEncontradoException::new);
+        return ProcessoResponse.from(processo);
     }
 
     private String gerarProtocolo(){
