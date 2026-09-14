@@ -5,8 +5,9 @@ import br.com.sigep.sigep.domain.enums.StatusProcesso;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "processos")
@@ -18,29 +19,27 @@ public class Processo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "numero", length = 20, unique = true, nullable = false)
-    private String numero;
+    @Column(name = "numero_protocolo", length = 30, unique = true, nullable = false)
+    private String numeroProtocolo;
 
-    @Column(name = "assunto", length = 200)
-    private String assunto;
+    @Column(name = "titulo", length = 200)
+    private String titulo;
 
     @Column(name = "descricao", columnDefinition = "TEXT", nullable = false)
     private String descricao;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_processo", nullable =  false)
+    @Column(name = "status_processo", nullable = false)
     private StatusProcesso statusProcesso;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "prioridade_processo", nullable = false)
     private PrioridadeProcesso prioridadeProcesso;
 
-    @Column(name = "data_abertura", nullable = false)
-    private LocalDate dataAbertura;
 
-    @Column(name = "prazo", nullable = false)
-    private LocalDate prazo;
-
+    @CreationTimestamp
+    @Column(name = "data_abertura", nullable = false, updatable = false)
+    private LocalDateTime dataAbertura;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "responsavel_id", nullable = false)
@@ -51,14 +50,13 @@ public class Processo {
     private Setor setorAtual;
 
 
-    public Processo(String numero, String assunto, String descricao, StatusProcesso statusProcesso, PrioridadeProcesso prioridadeProcesso, LocalDate dataAbertura, LocalDate prazo, Usuario responsavel, Setor setorAtual) {
-        this.numero = numero;
-        this.assunto = assunto;
+    public Processo(String numero, String assunto, String descricao , PrioridadeProcesso prioridadeProcesso, Usuario responsavel, Setor setorAtual) {
+        this.numeroProtocolo = numero;
+        this.titulo = assunto;
         this.descricao = descricao;
-        this.statusProcesso = statusProcesso;
+        this.statusProcesso = StatusProcesso.ABERTO;
         this.prioridadeProcesso = prioridadeProcesso;
-        this.dataAbertura = dataAbertura;
-        this.prazo = prazo;
+        this.dataAbertura = LocalDateTime.now();
         this.responsavel = responsavel;
         this.setorAtual = setorAtual;
     }
