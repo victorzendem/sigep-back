@@ -3,6 +3,7 @@ package br.com.sigep.sigep.application.service;
 
 import br.com.sigep.sigep.application.dto.processo.ProcessoRequest;
 import br.com.sigep.sigep.application.dto.processo.ProcessoResponse;
+import br.com.sigep.sigep.application.dto.processo.TramitacaoProcessoRequest;
 import br.com.sigep.sigep.domain.exception.ProcessoNaoEncontradoException;
 import br.com.sigep.sigep.domain.exception.SetorNaoEncontradoException;
 import br.com.sigep.sigep.domain.exception.UsuarioNaoEncontradoException;
@@ -67,6 +68,16 @@ public class ProcessoService {
     @Transactional(readOnly = true)
     public ProcessoResponse buscarPorNumeroProtocolo(String numeroP){
         Processo processo = PROCESSO_REPOSITORY.findByNumeroProtocolo(numeroP).orElseThrow(ProcessoNaoEncontradoException::new);
+        return ProcessoResponse.from(processo);
+    }
+
+    @Transactional
+    public ProcessoResponse tramitar(Long idProcesso, TramitacaoProcessoRequest request){
+        Processo processo = PROCESSO_REPOSITORY.findById(idProcesso).orElseThrow(ProcessoNaoEncontradoException::new);
+        Setor setorDestino = SETOR_REPOSITORY.findById(request.novoSetorId()).orElseThrow(SetorNaoEncontradoException::new);
+
+        processo.tramitar(setorDestino);
+
         return ProcessoResponse.from(processo);
     }
 

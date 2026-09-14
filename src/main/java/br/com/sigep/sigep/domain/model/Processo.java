@@ -60,4 +60,19 @@ public class Processo {
         this.responsavel = responsavel;
         this.setorAtual = setorAtual;
     }
+
+
+    public void tramitar(Setor novoSetorId){
+
+        if(this.statusProcesso == StatusProcesso.CONCLUIDO || this.statusProcesso == StatusProcesso.CANCELADO){
+            throw new IllegalStateException("Não é possível tramitar um processo canecelado ou concluído.");
+        }
+
+        if(this.setorAtual.getId().equals(novoSetorId.getId())){
+            throw new  IllegalArgumentException("O processo já se encontra no destino informado.");
+        }
+
+        this.setorAtual = novoSetorId;
+        this.statusProcesso =  StatusProcesso.EM_ANDAMENTO;
+    }
 }

@@ -3,10 +3,10 @@ package br.com.sigep.sigep.presentation.controller;
 
 import br.com.sigep.sigep.application.dto.processo.ProcessoRequest;
 import br.com.sigep.sigep.application.dto.processo.ProcessoResponse;
+import br.com.sigep.sigep.application.dto.processo.TramitacaoProcessoRequest;
 import br.com.sigep.sigep.application.service.ProcessoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -36,5 +36,11 @@ public class ProcessoController {
     @GetMapping("/protocolo/{protocolo}")
     public ResponseEntity<ProcessoResponse> buscarPorNumeroProtocolo(@PathVariable String protocolo){
         return ResponseEntity.ok(PROCESSO_SERVICE.buscarPorNumeroProtocolo(protocolo));
+    }
+
+    @PatchMapping("/{id}/tramitar")
+    public ResponseEntity<ProcessoResponse> tramitar(@PathVariable Long id, TramitacaoProcessoRequest request){
+
+        return ResponseEntity.ok(PROCESSO_SERVICE.tramitar(id, request));
     }
 }
