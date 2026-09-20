@@ -48,4 +48,6 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponse> buscarPorId(@PathVariable Long id){
         return ResponseEntity.ok(USUARIO_SERVICE.buscarPorId(id));
     }
+
+    public void buscarPorNome(){}
 }
