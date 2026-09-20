@@ -42,4 +42,9 @@ public class SetorController {
     public ResponseEntity<SetorResponse> atualizarParcialmente(@PathVariable Long id, @Valid @RequestBody SetorPatchRequest request){
         return ResponseEntity.ok(SETOR_SERVICE.atualizarParcialmente(id, request));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SetorResponse> buscarPorId(@PathVariable Long id){
+        return ResponseEntity.ok(SETOR_SERVICE.buscarPorId(id));
+    }
 }
