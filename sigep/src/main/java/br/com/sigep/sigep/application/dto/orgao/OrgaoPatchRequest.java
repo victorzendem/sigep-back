@@ -11,7 +11,7 @@ public record OrgaoPatchRequest(
         @Size(max=20, message="A sigla deve ter no máximo 20 caracteres.")
         String sigla,
 
-        @Pattern(regexp = "//{14}", message = "O CNPJ deve ter no máximo 14 dígitos.")
+        @Pattern(regexp = "\\d{14}", message = "O CNPJ deve ter no máximo 14 dígitos.")
         String cnpj
 ) {
 }

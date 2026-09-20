@@ -15,7 +15,7 @@ public record OrgaoRequest(
         String sigla,
 
         @NotBlank(message = "O CNPJ é obrigatório.")
-        @Pattern(regexp = "//d{14}", message = "Deve conter 14 dígitos")
+        @Pattern(regexp = "\\d{14}", message = "Deve conter 14 dígitos")
         String cpnj
 ) {
 }

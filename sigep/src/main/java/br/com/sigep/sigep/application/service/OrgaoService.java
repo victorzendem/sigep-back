@@ -25,7 +25,7 @@ public class OrgaoService {
 
     public OrgaoResponse cadastrar(OrgaoRequest orgaoRequest) {
 
-        if(ORGAO_REPOSITORY.existsByCnpj(orgaoRequest.nome())){
+        if(ORGAO_REPOSITORY.existsByCnpj(orgaoRequest.cpnj())){
             throw new OrgaoJaExisteException("Já existe um orgão com esse CNPJ.");
         }
 
