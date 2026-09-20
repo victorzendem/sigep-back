@@ -1,6 +1,6 @@
 spring:
   application:
-    name: sigep
+    name: ${APP_NAME}
 
   datasource:
     url: ${DB_URL}
