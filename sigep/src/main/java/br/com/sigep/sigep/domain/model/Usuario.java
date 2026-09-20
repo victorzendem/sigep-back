@@ -43,11 +43,11 @@ public class Usuario {
     @Column(name = "data_atualizacao", nullable = false)
     LocalDate dataAtualizacao;
 
-    public Usuario(String nome, String email, String senha, String cpf) {
+    public Usuario(String nome, String email, String cpf, String senha) {
         this.nome = nome;
         this.email = email;
-        this.senha = senha;
         this.cpf = cpf;
+        this.senha = senha;
     }
 
     public void atualizar(String nome, String email, String cpf, String senha){

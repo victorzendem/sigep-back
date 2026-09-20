@@ -44,4 +44,8 @@ public class UsuarioController {
         return ResponseEntity.ok(USUARIO_SERVICE.listarTodos(pageable));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioResponse> buscarPorId(@PathVariable Long id){
+        return ResponseEntity.ok(USUARIO_SERVICE.buscarPorId(id));
+    }
 }

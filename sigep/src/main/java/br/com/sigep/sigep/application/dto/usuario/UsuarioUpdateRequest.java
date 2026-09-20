@@ -15,8 +15,9 @@ public record UsuarioUpdateRequest(
         String email,
 
         @NotBlank(message = "O CPF é obrigatório.")
-        @Pattern(regexp = "//d{11}", message = "Deve conter 11 dígitos.")
+        @Pattern(regexp = "\\d{11}", message = "Deve conter 11 dígitos.")
         String cpf,
+
 
         @NotBlank(message = "A senha é obrigatória.")
         String senha
