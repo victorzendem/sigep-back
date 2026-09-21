@@ -14,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class OrgaoService {
@@ -98,10 +96,9 @@ public class OrgaoService {
     }
 
     @Transactional
-    public OrgaoResponse ativar(Long id){
+    public void ativar(Long id){
         Orgao orgao = findById(id);
         orgao.ativar();
-        return OrgaoResponse.from(orgao);
     }
 
 
