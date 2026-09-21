@@ -26,7 +26,7 @@ public class Usuario {
     @Column(name = "email", length = 50, unique = true, nullable = false)
     private String email;
 
-    @Column(name = "senha",nullable = false)
+    @Column(name = "senha", nullable = false)
     private String senha;
 
     @Column(name = "cpf", unique = true, nullable = false)
@@ -50,25 +50,33 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public void atualizar(String nome, String email, String cpf, String senha){
+    public void atualizar(String nome, String email, String cpf, String senha) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
         this.senha = senha;
     }
 
-    public void atualizarParcialmente(String nome, String email, String cpf, String senha){
-        if(nome != null){
+    public void atualizarParcialmente(String nome, String email, String cpf, String senha) {
+        if (nome != null) {
             this.nome = nome;
         }
-        if(email != null){
+        if (email != null) {
             this.email = email;
         }
-        if(cpf != null){
+        if (cpf != null) {
             this.cpf = cpf;
         }
-        if(senha != null){
+        if (senha != null) {
             this.senha = senha;
         }
+    }
+
+    public void ativar() {
+        this.ativo = true;
+    }
+
+    public void desativar() {
+        this.ativo = false;
     }
 }

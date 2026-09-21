@@ -77,5 +77,15 @@ public class UsuarioService {
         return USUARIO_REPOSITORY.findById(id).orElseThrow(UsuarioNaoEncontradoException::new);
     }
 
+    @Transactional
+    public void desativar(Long id){
+        Usuario usuario = findById(id);
+        usuario.desativar();
+    }
 
+    @Transactional
+    public void ativar(Long id){
+        Usuario usuario = findById(id);
+        usuario.ativar();
+    }
 }

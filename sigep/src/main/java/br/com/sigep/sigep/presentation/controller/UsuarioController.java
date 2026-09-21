@@ -49,5 +49,15 @@ public class UsuarioController {
         return ResponseEntity.ok(USUARIO_SERVICE.buscarPorId(id));
     }
 
-    public void buscarPorNome(){}
+    @PatchMapping("/ativar/{id}")
+    public ResponseEntity<Void> ativar(@PathVariable Long id){
+        USUARIO_SERVICE.ativar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/desativar/{id}")
+    public ResponseEntity<Void> desativar(@PathVariable Long id){
+        USUARIO_SERVICE.desativar(id);
+        return ResponseEntity.noContent().build();
+    }
 }
