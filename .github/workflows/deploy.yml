@@ -1,32 +1,18 @@
-name: CD - Deploy Automatico no Servidor
+name: CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  SISTEMA: sigep
 
 jobs:
   deploy:
-    name: Deploy no Servidor Linux
-    runs-on: ubuntu-latest
-
+    name: executar deploy no servidor linux
+    runs-on: self-hosted
     steps:
-      - name: Executar comandos no servidor via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          port: ${{ secrets.SERVER_PORT || 22 }}
-          script: |
-            # Entra na pasta do projeto dentro da home do usuário
-            cd ~/projetos/producao/sigep-back/sigep
-
-            # Puxa o código atualizado da branch master
-            git checkout master
-            git pull origin master
-
-            # Atualiza e reinicia o container do backend via Docker Compose
-            docker compose up -d --build backend
-
-            # Remove imagens antigas para economizar espaço em disco
-            docker image prune -f
+      - name: executar script de deploy dentro do servidor
+        run: |
+          /root/scripts/sigep-deploy.sh master

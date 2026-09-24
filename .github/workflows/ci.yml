@@ -39,10 +39,10 @@ jobs:
           cache: 'maven'
 
       # 3. Compila e roda os testes com as variáveis de ambiente necessárias
-      - name: Rodar testes com Maven
+      - name: executar os testes automatizados com o maven
         env:
           APP_NAME: sigep-test
           DB_URL: jdbc:postgresql://localhost:5432/sigep_test
           DB_USERNAME: test
           DB_PASSWORD: test
-        run: mvn clean test
+        run: ./mvnw clean test
