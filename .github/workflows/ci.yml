@@ -4,6 +4,9 @@ on:
   pull_request:
     branches: [ master, homologacao ]
 
+  push:
+    branches: [master]
+
 jobs:
   test-and-build:
     name: Testar e Compilar
