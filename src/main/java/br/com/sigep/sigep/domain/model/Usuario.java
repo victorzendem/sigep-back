@@ -1,19 +1,26 @@
 package br.com.sigep.sigep.domain.model;
 
+import br.com.sigep.sigep.domain.enums.PerfilUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.jspecify.annotations.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 
 @Entity
 @Table(name = "usuarios")
 @NoArgsConstructor
 @Data
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +41,11 @@ public class Usuario {
 
     @Column(name = "ativo", nullable = false)
     private boolean ativo = true;
+
+
+    @Enumerated
+    @Column(name = "perfil", nullable = false)
+    private PerfilUsuario perfilUsuario = PerfilUsuario.USUARIO;
 
     @CreationTimestamp
     @Column(name = "data_criacao", nullable = false)
@@ -78,5 +90,44 @@ public class Usuario {
 
     public void desativar() {
         this.ativo = false;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.perfilUsuario == PerfilUsuario.USUARIO){
+            return List.of(new SimpleGrantedAuthority("ROLE_USUARIO"),
+                    new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+        return List.of(new SimpleGrantedAuthority("ROLE_USUARIO"));
+    }
+
+    @Override
+    public @Nullable String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.ativo;
     }
 }
