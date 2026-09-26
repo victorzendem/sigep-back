@@ -11,6 +11,7 @@ import br.com.sigep.sigep.infraestructure.persistency.repository.UsuarioReposito
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class UsuarioService {
 
     private final UsuarioRepository USUARIO_REPOSITORY;
+    private final PasswordEncoder PASSWORD_ENCODDER;
 
     public UsuarioResponse cadastrar(UsuarioRequest usuarioRequest){
-
+        String senhaCriptografada = PASSWORD_ENCODDER.encode(usuarioRequest.senha());
         Usuario usuario = new Usuario(
                 usuarioRequest.nome(),
                 usuarioRequest.email(),
                 usuarioRequest.cpf(),
-                usuarioRequest.senha()
+                senhaCriptografada
         );
         USUARIO_REPOSITORY.save(usuario);
 

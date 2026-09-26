@@ -24,20 +24,19 @@ public class SecurityConfigurations {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        return http.
-                csrf(csrf -> csrf.disable())
+        return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
                         req -> req.requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
-                                .requestMatchers(HttpMethod.PATCH, "/api/v1/usuario/desativar/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PATCH, "/api/v1/usuario/desativar/**")
+                                .hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
-                .addFilterBefore(SECURITY_FILTER, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .addFilterBefore(SECURITY_FILTER, UsernamePasswordAuthenticationFilter.class).build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration){
         return configuration.getAuthenticationManager();
     }
 

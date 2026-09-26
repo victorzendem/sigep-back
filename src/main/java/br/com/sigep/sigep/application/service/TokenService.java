@@ -19,7 +19,7 @@ public class TokenService {
     @Value("${JWT_SECRET}")
     private String secret;
 
-    //gerar o token com assinatura simetrica(a mesma chave que assina, tambem valida.
+    //gera o token com assinatura simetrica(a mesma chave que assina, tambem valida).
     //usa o construtor da biblioteca JWT pra fazer a criacao do token
     public String gerarToken(Usuario usuario){
         try {
