@@ -3,7 +3,6 @@ package br.com.sigep.sigep.presentation.exception;
 import br.com.sigep.sigep.domain.exception.OrgaoNaoEncontradoException;
 import br.com.sigep.sigep.domain.exception.ProcessoNaoEncontradoException;
 import br.com.sigep.sigep.domain.exception.SetorJaExisteException;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,7 @@ public class ApiExceptionHandle {
     public ResponseEntity<ErrorResponse> handleDisabledUser(DisabledException ex){
         ErrorResponse response = new ErrorResponse(
                 HttpStatus.FORBIDDEN.value(),
-                "Usuário desatiavado. Entre em contato com o administrado",
+                "Usuário desativado. Entre em contato com o administrador",
                 LocalDateTime.now(),
                 List.of()
         );
@@ -49,7 +48,6 @@ public class ApiExceptionHandle {
                 LocalDateTime.now(),
                 List.of()
         );
-
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 

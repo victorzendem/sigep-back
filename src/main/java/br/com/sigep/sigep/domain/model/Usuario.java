@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -49,11 +50,11 @@ public class Usuario implements UserDetails {
 
     @CreationTimestamp
     @Column(name = "data_criacao", nullable = false)
-    LocalDate dataCriacao;
+    LocalDateTime dataCriacao;
 
     @CreationTimestamp
     @Column(name = "data_atualizacao", nullable = false)
-    LocalDate dataAtualizacao;
+    LocalDateTime dataAtualizacao;
 
     public Usuario(String nome, String email, String cpf, String senha) {
         this.nome = nome;

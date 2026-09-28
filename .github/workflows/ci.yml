@@ -12,7 +12,7 @@ jobs:
     name: Testar e Compilar
     runs-on: ubuntu-latest
 
-    # Sobe um banco PostgreSQL temporário no próprio GitHub Actions para os testes
+    # Sobe PostgreSQL e Redis temporários no próprio GitHub Actions para os testes
     services:
       postgres:
         image: postgres:16
@@ -24,6 +24,16 @@ jobs:
           - 5432:5432
         options: >-
           --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 5
@@ -49,4 +59,6 @@ jobs:
           DB_USERNAME: test
           DB_PASSWORD: test
           JWT_SECRET: 123
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
         run: ./mvnw clean test
